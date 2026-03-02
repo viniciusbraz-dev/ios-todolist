@@ -2,7 +2,10 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Query(sort: \TodoItem.createdAt, order: .reverse)
+    @Query(sort: [
+        SortDescriptor(\TodoItem.isCompleted, order: .forward),
+        SortDescriptor(\TodoItem.createdAt, order: .reverse)
+    ])
     private var items: [TodoItem]
 
     @Environment(\.modelContext) private var modelContext
@@ -12,8 +15,7 @@ struct ContentView: View {
     @State private var showCompleted = true
 
     var filteredItems: [TodoItem] {
-        let list = showCompleted ? items : items.filter { !$0.isCompleted }
-        return list.sorted { !$0.isCompleted && $1.isCompleted }
+        showCompleted ? items : items.filter { !$0.isCompleted }
     }
 
     var pendingCount: Int {

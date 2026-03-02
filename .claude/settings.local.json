@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xcode-select --print-path)",
+      "Bash(xcodebuild -version)",
+      "Bash(sw_vers)"
+    ]
+  }
+}
